@@ -1,4 +1,4 @@
-#include "wait.h"
+#include "Wait.h"
 
 int main(int argc, char **argv)
 {
