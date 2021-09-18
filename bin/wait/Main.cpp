@@ -2,6 +2,6 @@
 
 int main(int argc, char **argv)
 {
-    wait app(argc, argv);
+    Wait app(argc, argv);
     return app.run();
 }
