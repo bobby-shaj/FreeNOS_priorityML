@@ -1,7 +1,7 @@
-#include "Sleep.h"
+#include "wait.h"
 
 int main(int argc, char **argv)
 {
-    Sleep app(argc, argv);
+    wait app(argc, argv);
     return app.run();
 }
