@@ -19,7 +19,6 @@ class Wait : public POSIXApplication
      * Constructor
      *
      * @param argc Argument count
-     * @param argv Argument values
      */
     Wait(int argc, char **argv);
 

@@ -4,12 +4,16 @@
 #include <errno.h>
 #include <unistd.h>
 #include "Wait.h"
+#include "sys/wait.h"
+
+int processID;
 
 Wait::Wait(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Stop executing for some time");
-    parser().registerPositional("SECONDS", "Stop executing for the given number of seconds");
+    parser().setDescription("Waits for a background process to finish and return");
+    parser().registerPositional("PID", "Process ID of the process to wait for");
+    processID = atoi(argv[1]);
 }
 
 Wait::~Wait()
@@ -18,20 +22,16 @@ Wait::~Wait()
 
 Wait::Result Wait::exec()
 {
-    int sec = 0;
+    printf("processID = %d\n", processID);
+    int stat_loc;
+    int result = waitpid(processID, &stat_loc, 0);
+    printf("result = %d\n", result);
 
-    // Convert input to seconds
-    if ((sec = atoi(arguments().get("SECONDS"))) <= 0)
-    {
-        ERROR("invalid wait time `" << arguments().get("SECONDS") << "'");
-        return InvalidArgument;
+    if (result == -1) {
+        printf("Process did not exit properly.\n");
     }
-
-    // Wait now
-    if (wait(sec) != 0)
-    {
-        ERROR("failed to wait: " << strerror(errno));
-        return IOError;
+    else if (result == processID) {
+        printf("Process successfully completed.\n");
     }
 
     // Done
