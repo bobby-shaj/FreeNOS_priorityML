@@ -30,6 +30,7 @@ Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &
     m_parent        = 0;
     m_waitId        = 0;
     m_waitResult    = 0;
+    m_priority      = 0;
     m_wakeups       = 0;
     m_entry         = entry;
     m_privileged    = privileged;
@@ -75,6 +76,11 @@ ProcessID Process::getWait() const
 uint Process::getWaitResult() const
 {
     return m_waitResult;
+}
+
+int Process::getPriority()
+{
+    return m_priority;
 }
 
 Process::State Process::getState() const
