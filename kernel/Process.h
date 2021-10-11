@@ -71,6 +71,13 @@ class Process
         Stopped
     };
 
+    enum PriorityLevel
+    {
+        Min = 1,
+        Default = 3,
+        Max = 5
+    };
+
   public:
 
     /**
@@ -115,12 +122,12 @@ class Process
     /*
      * Get priority of process
      */
-    int getPriority();
+    PriorityLevel getPriority();
 
     /*
      * Change the priority of a process to newPriority
      */
-    void changePriority(int newPriority);
+    bool changePriority(int newPriority);
 
     /**
      * Get process shares.
@@ -267,6 +274,9 @@ class Process
 
     /** Wait exit result of the other Process. */
     uint m_waitResult;
+
+    /** Priority level of the process */
+    PriorityLevel m_priority;
 
     /** Privilege level */
     bool m_privileged;
