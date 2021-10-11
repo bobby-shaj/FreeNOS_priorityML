@@ -83,6 +83,11 @@ int Process::getPriority()
     return m_priority;
 }
 
+void Process::changePriority(int newPriority)
+{
+    m_priority = newPriority;
+}
+
 Process::State Process::getState() const
 {
     return m_state;
