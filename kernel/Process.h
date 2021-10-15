@@ -127,7 +127,7 @@ class Process
     /*
      * Change the priority of a process to newPriority
      */
-    bool changePriority(int newPriority);
+    bool setPriority(int newPriority);
 
     /**
      * Get process shares.
