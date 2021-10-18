@@ -19,6 +19,7 @@ Renice::Renice(int argc, char **argv)
     parser().registerPositional("PID", "Process ID of the process to change priority of");
     parser().registerFlag('n', "priority", "Specifies the new priority of the process");
     newPriority = atoi(argv[2]);
+    printf("newPriority = %d\n", newPriority);
     processID = atoi(argv[3]);
 }
 
