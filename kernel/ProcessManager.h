@@ -209,6 +209,9 @@ class ProcessManager
      */
     Process * current();
 
+    Result requeueProcess(Process *proc);
+
+
   private:
 
     /**
@@ -231,7 +234,6 @@ class ProcessManager
      */
     Result dequeueProcess(Process *proc, const bool ignoreState = false) const;
 
-    Result requeueProcess(Process *proc);
 
 
   private:

@@ -74,7 +74,7 @@ typedef struct ProcessInfo
     Process::State state;
 
     /** Priority level of the process. */
-    Process::PriorityLevel priority;
+    int priority;
 }
 ProcessInfo;
 
