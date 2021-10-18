@@ -122,7 +122,7 @@ class Process
     /*
      * Get priority of process
      */
-    PriorityLevel getPriority();
+    int getPriority();
 
     /*
      * Change the priority of a process to newPriority
