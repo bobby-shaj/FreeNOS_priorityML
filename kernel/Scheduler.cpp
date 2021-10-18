@@ -48,8 +48,16 @@ Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
         m_queue_min.push(proc);
         result = Success;
         break;
+    case 2:
+        m_queue_lower.push(proc);
+        result = Success;
+        break;
     case 3:
         m_queue_default.push(proc);
+        result = Success;
+        break;
+    case 4:
+        m_queue_higher.push(proc);
         result = Success;
         break;
     case 5:
@@ -72,7 +80,9 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
     }
 
     Size min_count = m_queue_min.count();
+    Size lower_count = m_queue_lower.count();
     Size default_count = m_queue_default.count();
+    Size higher_count = m_queue_higher.count();
     Size max_count = m_queue_max.count();
 
     // Traverse the min Queue to remove the Process
@@ -86,6 +96,17 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
             m_queue_min.push(p);
     }
 
+    // Traverse the lower(2nd) Queue to remove the Process
+    for (Size i = 0; i < lower_count; i++)
+    {
+        Process *p = m_queue_lower.pop();
+
+        if (p == proc)
+            return Success;
+        else
+            m_queue_lower.push(p);
+    }
+
     // Traverse the default Queue to remove the Process
     for (Size i = 0; i < default_count; i++)
     {
@@ -95,6 +116,17 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
             return Success;
         else
             m_queue_default.push(p);
+    }
+
+    // Traverse the higher(4th) Queue to remove the Process
+    for (Size i = 0; i < higher_count; i++)
+    {
+        Process *p = m_queue_higher.pop();
+
+        if (p == proc)
+            return Success;
+        else
+            m_queue_higher.push(p);
     }
 
     // Traverse the max Queue to remove the Process
@@ -120,9 +152,17 @@ Process * Scheduler::select()
         p = m_queue_max.pop();
         m_queue_max.push(p);
         return p; 
+    }else if(m_queue_higher.count() > 0){
+        p = m_queue_higher.pop(); 
+        m_queue_higher.push(p);
+        return p; 
     }else if(m_queue_default.count() > 0){
         p = m_queue_default.pop(); 
         m_queue_default.push(p);
+        return p; 
+    }else if(m_queue_lower.count() > 0){
+        p = m_queue_lower.pop(); 
+        m_queue_lower.push(p);
         return p; 
     }else if(m_queue_min.count() > 0 ){
         p = m_queue_min.pop(); 
