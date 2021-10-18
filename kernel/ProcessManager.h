@@ -231,6 +231,9 @@ class ProcessManager
      */
     Result dequeueProcess(Process *proc, const bool ignoreState = false) const;
 
+    Result ProcessManager::requeueProcess(Process *proc);
+
+
   private:
 
     /** All known Processes. */
