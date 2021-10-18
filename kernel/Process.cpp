@@ -78,9 +78,9 @@ uint Process::getWaitResult() const
     return m_waitResult;
 }
 
-Process::PriorityLevel Process::getPriority()
+int Process::getPriority()
 {
-    return m_priority;
+    return (int)m_priority;
 }
 
 bool Process::setPriority(int newPriority)

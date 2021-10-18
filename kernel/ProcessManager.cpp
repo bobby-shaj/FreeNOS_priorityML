@@ -421,3 +421,18 @@ ProcessManager::Result ProcessManager::dequeueProcess(Process *proc, const bool 
 
     return Success;
 }
+
+//Dequeues and then enques the process to move it to the proper priority level. 
+ProcessManager::Result ProcessManager::requeueProcess(Process *proc){
+    const Result rd = dequeueProcess(proc, true);
+    if(rd != Success){
+        FATAL("failed to dequeue PID" << proc->getID())        ;
+    }
+
+    const Result re = enqueueProcess(proc, true);
+    if(re != Success){
+        FATAL("failed to dequeue PID" << proc->getID())        ;
+    }
+
+    return Success; 
+}
